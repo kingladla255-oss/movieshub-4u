@@ -38,7 +38,6 @@
             color: white;
             font-size: 16px;
         }
-        /* ہوم پیج موویز کا ڈیزائن */
         .movie-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -70,7 +69,6 @@
             font-weight: bold;
             line-height: 1.3;
         }
-        /* ڈاؤن لوڈ پیج کا ڈیزائن */
         .container {
             max-width: 700px;
             margin: 0 auto;
@@ -126,7 +124,6 @@
             display: inline-block;
         }
         .btn-download { background-color: #ffcc00; }
-        .btn-download:hover { background-color: #cca300; }
         .btn-back { background-color: #ffffff; color: #000; font-size: 14px; width: auto; padding: 8px 15px; margin-bottom: 10px; }
     </style>
 </head>
@@ -136,7 +133,7 @@
         <h1>MOVIES HUB 4 U</h1>
     </header>
 
-    <!-- 1. ہوم پیج (یہاں موویز نظر آئیں گی) -->
+    <!-- 1. ہوم پیج -->
     <div id="home-view">
         <div class="search-box">
             <input type="text" placeholder="یہاں مووی کا نام سرچ کریں...">
@@ -144,22 +141,22 @@
         
         <div class="movie-grid">
             
-            <!-- مووی کارڈ 1 -->
-            <div class="movie-card" onclick="openMovie('Kenatha Kanom (2026) [Hindi-Tamil]', 'https://unsplash.com', 'https://unsplash.com', 'https://unsplash.com', 'https://w3schools.com')">
-                <img src="https://unsplash.com" alt="Poster">
+            <!-- مووی 1: Kenatha Kanom -->
+            <div class="movie-card" onclick="openMovie('Kenatha Kanom (2026)', 'https://tmdb.org', 'https://tmdb.org', 'https://tmdb.org', 'https://w3schools.com')">
+                <img src="https://tmdb.org" alt="Poster">
                 <div class="movie-info">Kenatha Kanom (2026) DS4K WEB-DL [Hindi & Tamil] Dual Audio</div>
             </div>
 
-            <!-- مووی کارڈ 2 -->
-            <div class="movie-card" onclick="openMovie('Undertone (2026) [Hindi-English]', 'https://unsplash.com', 'https://unsplash.com', 'https://unsplash.com', 'https://w3schools.com')">
-                <img src="https://unsplash.com" alt="Poster">
+            <!-- مووی 2: Undertone -->
+            <div class="movie-card" onclick="openMovie('Undertone (2026)', 'https://tmdb.org', 'https://tmdb.org', 'https://tmdb.org', 'https://w3schools.com')">
+                <img src="https://tmdb.org" alt="Poster">
                 <div class="movie-info">Undertone (2026) WEB-DL [Hindi & English] Dual Audio</div>
             </div>
 
         </div>
     </div>
 
-    <!-- 2. ڈاؤن لوڈ اور پلے پیج (مووی پر کلک کرنے کے بعد شو ہوگا) -->
+    <!-- 2. ڈاؤن لوڈ اور پلے پیج -->
     <div id="download-view" style="display: none;">
         <div class="container">
             <button class="btn btn-back" onclick="goBack()">⬅ Back to Home</button>
@@ -186,27 +183,22 @@
     </div>
 
     <script>
-        // مووی پر کلک کرنے سے ڈاؤن لوڈ ویو دکھانے کا آسان سسٹم
         function openMovie(title, poster, screen1, screen2, videoLink) {
             document.getElementById('home-view').style.display = 'none';
             document.getElementById('download-view').style.display = 'block';
             window.scrollTo(0, 0);
 
-            // ڈیٹا سیٹ کرنا
             document.getElementById('movie-title').innerText = title;
             document.getElementById('movie-poster').src = poster;
 
-            // سکرین شاٹس ڈالنا
             const screenContainer = document.getElementById('screenshot-container');
             screenContainer.innerHTML = `<img src="${screen1}"><img src="${screen2}">`;
 
-            // ویڈیو پلے اور ڈاؤن لوڈ لنک لگانا
             document.getElementById('video-source').src = videoLink;
             document.getElementById('video-player').load();
             document.getElementById('download-btn').href = videoLink;
         }
 
-        // واپس ہوم پیج پر جانے کا فنکشن
         function goBack() {
             document.getElementById('home-view').style.display = 'block';
             document.getElementById('download-view').style.display = 'none';
