@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies Hub 4 U - Explore Millions of Movies</title>
+    <title>Movies Hub 4 U</title>
     <style>
         body {
             background-color: #0b0c10;
@@ -27,14 +27,13 @@
         .search-container {
             display: flex;
             justify-content: center;
-            gap: 10px;
             margin-bottom: 25px;
             max-width: 500px;
             margin-left: auto;
             margin-right: auto;
         }
         .search-container input {
-            flex: 1;
+            width: 100%;
             padding: 12px;
             border-radius: 5px;
             border: 1px solid #ffcc00;
@@ -42,15 +41,6 @@
             color: white;
             font-size: 16px;
         }
-        .search-container button {
-            padding: 12px 20px;
-            background-color: #ffcc00;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        /* ہوم پیج گریڈ */
         .movie-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -65,18 +55,27 @@
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
-        .movie-card img {
+        /* آٹو گرافک پوسٹر جو کبھی بلاک نہیں ہوگا */
+        .poster-bg {
             width: 100%;
             height: 220px;
-            object-fit: cover;
+            background: linear-gradient(135deg, #ffcc00 0%, #ff6600 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #000;
+        }
+        .poster-bg h2 {
+            font-size: 45px;
+            margin: 0;
         }
         .movie-info {
             padding: 8px;
             text-align: center;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
         }
-        /* پلیئر ویو */
         .player-container {
             max-width: 800px;
             margin: 0 auto;
@@ -84,22 +83,30 @@
             padding: 15px;
             border-radius: 10px;
         }
-        .iframe-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
+        .video-wrapper {
+            margin: 20px 0;
+            text-align: center;
+        }
+        video {
+            width: 100%;
             border-radius: 8px;
             background: #000;
-            margin: 15px 0;
         }
-        .iframe-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #000;
+            background-color: #ffcc00;
         }
         .btn-back {
             background-color: #ffffff;
@@ -119,107 +126,89 @@
         <h1>MOVIES HUB 4 U</h1>
     </header>
 
-    <!-- 1. ہوم پیج اور سرچ سسٹم -->
+    <!-- 1. ہوم پیج ویو -->
     <div id="home-view">
         <div class="search-container">
-            <input type="text" id="search-query" placeholder="سرچ کریں (مثال: Jawan, Pathaan, Avatar)...">
-            <button onclick="searchMovies()">Search</button>
+            <input type="text" id="search-input" onkeyup="filterMovies()" placeholder="یہاں مووی کا نام سرچ کریں...">
         </div>
         
-        <h3 style="color: #ffcc00; text-align: center;" id="grid-title">Latest Popular Movies</h3>
-        <div class="movie-grid" id="movies-container">
-            <!-- یہاں انٹرنیٹ سے تازہ ترین فلمیں خود بخود لوڈ ہوں گی -->
+        <h3 style="color: #ffcc00; text-align: center;">Latest Releases</h3>
+        
+        <div class="movie-grid">
+            <!-- مووی 1 -->
+            <div class="movie-card" onclick="playMovie('Kenatha Kanom (2026) DS4K WEB-DL [Hindi & Tamil]', 'https://w3schools.com')">
+                <div class="poster-bg">
+                    <h2>🎬</h2>
+                    <b style="font-size: 11px;">MOVIES HUB 4U</b>
+                </div>
+                <div class="movie-info">Kenatha Kanom (2026) DS4K WEB-DL [Hindi & Tamil] Dual Audio</div>
+            </div>
+
+            <!-- مووی 2 -->
+            <div class="movie-card" onclick="playMovie('Undertone (2026) WEB-DL [Hindi & English]', 'https://w3schools.com')">
+                <div class="poster-bg" style="background: linear-gradient(135deg, #00ffcc 0%, #006699 100%);">
+                    <h2>🍿</h2>
+                    <b style="font-size: 11px;">MOVIES HUB 4U</b>
+                </div>
+                <div class="movie-info">Undertone (2026) WEB-DL [Hindi & English] Dual Audio</div>
+            </div>
         </div>
     </div>
 
-    <!-- 2. لائیو پلیئر اور ڈاؤن لوڈ پیج -->
+    <!-- 2. پلے اور ڈاؤن لوڈ ویو -->
     <div id="download-view" style="display: none;">
         <div class="player-container">
             <button class="btn-back" onclick="goBack()">⬅ Back to Home</button>
-            <h2 id="movie-title" style="color: #ffcc00; font-size: 20px;">Movie Title</h2>
+            <h2 id="movie-title">Movie Title</h2>
             
-            <!-- یہ لائیو اسٹریمنگ پلیئر ہے جو 100% کام کرے گا اور اس میں ڈاؤن لوڈ بٹن بھی ہوگا -->
-            <div class="iframe-wrapper">
-                <iframe id="video-iframe" src="" allowfullscreen></iframe>
+            <div class="video-wrapper">
+                <video id="main-player" controls preload="auto">
+                    <source id="video-src" src="" type="video/mp4">
+                    آپ کا براؤزر ویڈیو سپورٹ نہیں کرتا۔
+                </video>
             </div>
             
-            <p style="font-size: 13px; color: #aaa; text-align: center;">پلیئر کے اندر موجود ڈاؤن لوڈ آئیکن پر کلک کر کے آپ فلم ڈاؤن لوڈ کر سکتے ہیں۔</p>
+            <div class="btn-container">
+                <a id="download-link" href="" download class="btn">📥 Click to Download</a>
+            </div>
         </div>
     </div>
 
     <script>
-        const apiKey = '8265bd1679663a7ea12ac168da84d2e8';
-        const container = document.getElementById('movies-container');
-
-        // ویب سائٹ کھلتے ہی ہٹ موویز لانے کا نظام
-        async function loadPopularMovies() {
-            try {
-                const res = await fetch(`https://themoviedb.org{apiKey}&language=en-US&page=1`);
-                const data = await res.json();
-                displayMovies(data.results);
-            } catch (e) {
-                console.log("Error loading popular movies");
-            }
-        }
-
-        // سرچ بار کا بالکل نیا اور آٹومیٹک سسٹم
-        async function searchMovies() {
-            const query = document.getElementById('search-query').value;
-            if (!query) return;
-            
-            try {
-                const res = await fetch(`https://themoviedb.org{apiKey}&query=${encodeURIComponent(query)}&language=en-US`);
-                const data = await res.json();
-                document.getElementById('grid-title').innerText = `Search Results for: ${query}`;
-                displayMovies(data.results);
-            } catch (e) {
-                alert("سرچ کرنے میں کوئی مسئلہ ہوا، دوبارہ کوشش کریں۔");
-            }
-        }
-
-        // فلموں کو اسکرین پر سجانا
-        function displayMovies(movies) {
-            container.innerHTML = '';
-            if(movies.length === 0) {
-                container.innerHTML = '<p style="text-align:center; width:100%;">کوئی مووی نہیں ملی۔ نام دوبارہ چیک کریں۔</p>';
-                return;
-            }
-            
-            movies.forEach(movie => {
-                if(!movie.poster_path) return; // اگر تصویر نہ ہو تو چھوڑ دیں
-                
-                const card = document.createElement('div');
-                card.className = 'movie-card';
-                card.onclick = () => playMovie(movie.id, movie.title);
-                
-                const posterUrl = `https://tmdb.org{movie.poster_path}`;
-                card.innerHTML = `
-                    <img src="${posterUrl}" alt="${movie.title}">
-                    <div class="movie-info">${movie.title}</div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // پلے بٹن کا آخری حل (یہ سرور 100% فلمیں پلے کرتا ہے)
-        function playMovie(id, title) {
+        // مووی پلے کرنے کا سسٹم
+        function playMovie(title, videoUrl) {
             document.getElementById('home-view').style.display = 'none';
             document.getElementById('download-view').style.display = 'block';
             document.getElementById('movie-title').innerText = title;
-            window.scrollTo(0, 0);
-
-            // یہ کلاؤڈ سرور مووی آئی ڈی کی مدد سے اصل ویڈیو اور ڈاؤن لوڈ لنک خود بخود لوڈ کر دے گا
-            document.getElementById('video-iframe').src = `https://vidsrc.to{id}`;
+            
+            const player = document.getElementById('main-player');
+            document.getElementById('video-src').src = videoUrl;
+            document.getElementById('download-link').href = videoUrl;
+            
+            player.load();
+            player.play();
         }
 
+        // واپس ہوم پیج پر جانے کا بٹن
         function goBack() {
             document.getElementById('home-view').style.display = 'block';
             document.getElementById('download-view').style.display = 'none';
-            document.getElementById('video-iframe').src = ''; // پلیئر بند کریں
+            document.getElementById('main-player').pause();
         }
 
-        // ویب سائٹ اوپن ہوتے ہی موویز چل پڑیں گی
-        loadPopularMovies();
+        // سرچ بار فلٹر
+        function filterMovies() {
+            let input = document.getElementById('search-input').value.toLowerCase();
+            let cards = document.getElementsByClassName('movie-card');
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getElementsByClassName('movie-info').innerText.toLowerCase();
+                if (title.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
     </script>
 </body>
 </html>
