@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies Hub 4 U</title>
+    <title>Movies Hub 4 U - Multi Server Links</title>
     <style>
         body {
             background-color: #0b0c10;
@@ -43,7 +43,7 @@
         }
         .movie-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 15px;
             max-width: 1200px;
             margin: 0 auto;
@@ -55,10 +55,9 @@
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
-        /* آٹو گرافک پوسٹر جو کبھی بلاک نہیں ہوگا */
         .poster-bg {
             width: 100%;
-            height: 220px;
+            height: 200px;
             background: linear-gradient(135deg, #ffcc00 0%, #ff6600 100%);
             display: flex;
             align-items: center;
@@ -67,14 +66,15 @@
             color: #000;
         }
         .poster-bg h2 {
-            font-size: 45px;
+            font-size: 40px;
             margin: 0;
         }
         .movie-info {
             padding: 8px;
             text-align: center;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
+            min-height: 34px;
         }
         .player-container {
             max-width: 800px;
@@ -83,14 +83,22 @@
             padding: 15px;
             border-radius: 10px;
         }
-        .video-wrapper {
-            margin: 20px 0;
-            text-align: center;
-        }
-        video {
-            width: 100%;
+        .iframe-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
             border-radius: 8px;
             background: #000;
+            margin: 20px 0;
+        }
+        .iframe-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
         .btn-container {
             display: flex;
@@ -132,76 +140,89 @@
             <input type="text" id="search-input" onkeyup="filterMovies()" placeholder="یہاں مووی کا نام سرچ کریں...">
         </div>
         
-        <h3 style="color: #ffcc00; text-align: center;">Latest Releases</h3>
+        <h3 style="color: #ffcc00; text-align: center;">All Ready-to-Play Movies</h3>
         
         <div class="movie-grid">
+            
             <!-- مووی 1 -->
-            <div class="movie-card" onclick="playMovie('Kenatha Kanom (2026) DS4K WEB-DL [Hindi & Tamil]', 'https://w3schools.com')">
-                <div class="poster-bg">
-                    <h2>🎬</h2>
-                    <b style="font-size: 11px;">MOVIES HUB 4U</b>
-                </div>
-                <div class="movie-info">Kenatha Kanom (2026) DS4K WEB-DL [Hindi & Tamil] Dual Audio</div>
+            <div class="movie-card" onclick="playMovie('Avatar: The Way of Water', '76600')">
+                <div class="poster-bg"><h2>🌊</h2><b style="font-size:10px;">AVATAR 2</b></div>
+                <div class="movie-info">Avatar: The Way of Water (2022)</div>
             </div>
 
             <!-- مووی 2 -->
-            <div class="movie-card" onclick="playMovie('Undertone (2026) WEB-DL [Hindi & English]', 'https://w3schools.com')">
-                <div class="poster-bg" style="background: linear-gradient(135deg, #00ffcc 0%, #006699 100%);">
-                    <h2>🍿</h2>
-                    <b style="font-size: 11px;">MOVIES HUB 4U</b>
-                </div>
-                <div class="movie-info">Undertone (2026) WEB-DL [Hindi & English] Dual Audio</div>
+            <div class="movie-card" onclick="playMovie('Spider-Man: No Way Home', '634649')">
+                <div class="poster-bg" style="background:linear-gradient(135deg, #ff0055 0%, #770022 100%);"><h2>🕷️</h2><b style="font-size:10px;">SPIDERMAN</b></div>
+                <div class="movie-info">Spider-Man: No Way Home (2021)</div>
             </div>
+
+            <!-- مووی 3 -->
+            <div class="movie-card" onclick="playMovie('Oppenheimer', '872585')">
+                <div class="poster-bg" style="background:linear-gradient(135deg, #3a3a3a 0%, #111111 100%); color:#fff;"><h2>💣</h2><b style="font-size:10px;">OPPENHEIMER</b></div>
+                <div class="movie-info">Oppenheimer (2023) Blueray</div>
+            </div>
+
+            <!-- مووی 4 -->
+            <div class="movie-card" onclick="playMovie('Barbie', '346698')">
+                <div class="poster-bg" style="background:linear-gradient(135deg, #ff66cc 0%, #cc0088 100%);"><h2>🎀</h2><b style="font-size:10px;">BARBIE</b></div>
+                <div class="movie-info">Barbie (2023) Dual Audio</div>
+            </div>
+
+            <!-- مووی 5 -->
+            <div class="movie-card" onclick="playMovie('Avengers: Endgame', '299534')">
+                <div class="poster-bg" style="background:linear-gradient(135deg, #002266 0%, #001133 100%); color:#fff;"><h2>🛡️</h2><b style="font-size:10px;">AVENGERS</b></div>
+                <div class="movie-info">Avengers: Endgame (2019)</div>
+            </div>
+
+            <!-- مووی 6 -->
+            <div class="movie-card" onclick="playMovie('The Dark Knight', '155')">
+                <div class="poster-bg" style="background:linear-gradient(135deg, #222 0%, #444 100%); color:#fff;"><h2>🦇</h2><b style="font-size:10px;">BATMAN</b></div>
+                <div class="movie-info">The Dark Knight (Batman)</div>
+            </div>
+
         </div>
     </div>
 
-    <!-- 2. پلے اور ڈاؤن لوڈ ویو -->
+    <!-- 2. لائیو پلیئر اور ڈاؤن لوڈ ویو -->
     <div id="download-view" style="display: none;">
         <div class="player-container">
             <button class="btn-back" onclick="goBack()">⬅ Back to Home</button>
             <h2 id="movie-title">Movie Title</h2>
             
-            <div class="video-wrapper">
-                <video id="main-player" controls preload="auto">
-                    <source id="video-src" src="" type="video/mp4">
-                    آپ کا براؤزر ویڈیو سپورٹ نہیں کرتا۔
-                </video>
+            <!-- کلاؤڈ پلیئر جو 100٪ ویڈیو چلائے گا اور ڈاؤن لوڈ لنک بھی فراہم کرے گا -->
+            <div class="iframe-wrapper">
+                <iframe id="video-iframe" src="" allowfullscreen></iframe>
             </div>
-            
-            <div class="btn-container">
-                <a id="download-link" href="" download class="btn">📥 Click to Download</a>
-            </div>
+
+            <p style="font-size: 13px; color: #aaa; text-align: center; margin-top:10px;">نوٹ: فلم ڈاؤن لوڈ کرنے کے لیے پلیئر اسکرین کے اندر بنے "Download" یا "Menu" کے آپشن پر کلک کریں۔</p>
         </div>
     </div>
 
     <script>
-        // مووی پلے کرنے کا سسٹم
-        function playMovie(title, videoUrl) {
+        // مووی پلے کرنے کا فائنل آٹومیٹک لنک سسٹم
+        function playMovie(title, tmdbId) {
             document.getElementById('home-view').style.display = 'none';
             document.getElementById('download-view').style.display = 'block';
             document.getElementById('movie-title').innerText = title;
-            
-            const player = document.getElementById('main-player');
-            document.getElementById('video-src').src = videoUrl;
-            document.getElementById('download-link').href = videoUrl;
-            
-            player.load();
-            player.play();
+            window.scrollTo(0, 0);
+
+            // یہ کلاؤڈ سرور لنک ہے جو بلاک نہیں ہوتا اور لائیو پلے دیتا ہے
+            document.getElementById('video-iframe').src = `https://vidsrc.to{tmdbId}`;
         }
 
         // واپس ہوم پیج پر جانے کا بٹن
         function goBack() {
             document.getElementById('home-view').style.display = 'block';
             document.getElementById('download-view').style.display = 'none';
-            document.getElementById('main-player').pause();
+            document.getElementById('video-iframe').src = ''; // بند ہونے پر ویڈیو روک دیں
         }
 
-        // سرچ بار فلٹر
+        // سرچ بار کا فلٹر سسٹم
         function filterMovies() {
             let input = document.getElementById('search-input').value.toLowerCase();
             let cards = document.getElementsByClassName('movie-card');
             for (let i = 0; i < cards.length; i++) {
-                let title = cards[i].getElementsByClassName('movie-info').innerText.toLowerCase();
+                let title = cards[i].getElementsByClassName('movie-info')[0].innerText.toLowerCase();
                 if (title.includes(input)) {
                     cards[i].style.display = "";
                 } else {
